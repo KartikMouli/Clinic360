@@ -10,6 +10,7 @@ export const login = createAsyncThunk(
             const response = await axios.post(`${API_URL}/auth/login`, { email, password, role });
             const { token, user } = response.data;
             localStorage.setItem('token', token);
+
             return { token, user };
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || 'Login failed');
@@ -23,12 +24,10 @@ export const register = createAsyncThunk(
         try {
             const endpoint = role === 'doctor' ? `${API_URL}/auth/register-doctor` : `${API_URL}/auth/register-patient`;
             const response = await axios.post(endpoint, userData);
-            // console.log("response.data:",response.data)
             
             return response.data;
 
         } catch (error) {
-            // console.log("error:",error)
             return rejectWithValue(error.response?.data?.message || 'Registration failed');
         }
     }
@@ -81,6 +80,9 @@ const authSlice = createSlice({
         },
         clearError: (state) => {
             state.error = null;
+        },
+        resetSuccess: (state) => {
+            state.success = false;
         },
     },
     extraReducers: (builder) => {
@@ -139,5 +141,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError,resetSuccess } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { useSelector } from "react-redux";
-import { clearError, register } from "../../redux/slices/authSlice";
+import { clearError, register,resetSuccess } from "../../redux/slices/authSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { SPECIALTIES, STATES } from "../../config/constants";
@@ -34,6 +34,14 @@ const Register = () => {
             dispatch(clearError());
         }
     }, [error, dispatch]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('Registration successful! Redirecting to login...');
+            navigate('/login');
+            dispatch(resetSuccess());
+        }
+    }, [success, dispatch, navigate]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -97,10 +105,6 @@ const Register = () => {
 
         dispatch(register(userData));
 
-        if (success) {
-            toast.success('Registration successful! Redirecting to login...');
-            navigate("/login")
-        }
 
     };
 
