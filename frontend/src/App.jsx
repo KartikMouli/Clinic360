@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // Layout Components
 import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/footer';
+import Footer from './components/layout/Footer'
 
 
 import Home from './pages/Home';
