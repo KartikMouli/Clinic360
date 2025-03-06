@@ -16,7 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Allow specific origins (frontend URL)
-const allowedOrigins = ['https://arogo-ai-clinic360-dj39-kartik-moulis-projects.vercel.app/', 'https://arogo-ai-clinic360-dj39.vercel.app/','https://arogo-ai-clinic360-dj39-git-main-kartik-moulis-projects.vercel.app/','https://arogo-ai-clinic360-dj39-9mx1gg69v-kartik-moulis-projects.vercel.app/'];
+const allowedOrigins = ['https://arogo-ai-clinic360-dj39-kartik-moulis-projects.vercel.app', 'https://arogo-ai-clinic360-dj39.vercel.app','https://arogo-ai-clinic360-dj39-git-main-kartik-moulis-projects.vercel.app','https://arogo-ai-clinic360-dj39-9mx1gg69v-kartik-moulis-projects.vercel.app'];
 const corsOptions = {
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
