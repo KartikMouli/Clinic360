@@ -14,6 +14,7 @@ const ManageLocations = () => {
 
     const [selectedState, setSelectedState] = useState('');
 
+
     useEffect(() => {
         dispatch(getDoctorLocations(user.id));
     }, [dispatch]);

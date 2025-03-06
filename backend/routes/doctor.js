@@ -1,5 +1,5 @@
 const express = require('express');
-const { searchDoctors, getDoctorProfile, setAvailability, getDoctorAvailability, getLocation, updateLocation } = require('../controllers/doctorController');
+const { searchDoctors, getDoctorProfile, getDoctorAvailability, getLocation, updateLocation } = require('../controllers/doctorController');
 const auth = require('../middleware/auth');
 
 const router = express.Router();

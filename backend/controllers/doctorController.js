@@ -48,7 +48,6 @@ exports.getDoctorAvailability = async (req, res) => {
 
     try {
 
-
         const formattedDate = new Date(date).toISOString().split('T')[0]
 
         const doctor = await Doctor.findOne(
@@ -78,7 +77,7 @@ exports.getDoctorAvailability = async (req, res) => {
 
 exports.getLocation = async (req, res) => {
     try {
-        if (req.params.id) {
+        if (!req.params.id) {
             return res.status(400).json({ message: 'Doctor ID is required' });
         }
 
