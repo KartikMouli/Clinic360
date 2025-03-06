@@ -1,5 +1,5 @@
 // API URL
-export const API_URL = 'http://localhost:5000/api';
+export const API_URL = 'https://arogoai-clinic360.onrender.com';
 
 // Specialties
 export const SPECIALTIES = [
