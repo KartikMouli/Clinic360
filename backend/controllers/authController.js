@@ -24,13 +24,17 @@ exports.registerPatient = async (req, res) => {
             return res.status(400).json({ message: 'Password must be at least 6 characters long' });
         }
 
+
         const user = await Patient.findOne({ email });
         if (user) {
             return res.status(400).json({ message: 'user already exists' });
         }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const patient = new Patient({ firstName, lastName, email, password: hashedPassword });
         await patient.save();
+
+
         res.status(200).json({ message: 'Patient registered successfully' });
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -81,16 +85,18 @@ exports.login = async (req, res) => {
         const user = await Model.findOne({ email });
 
         if (!user) {
-            return res.status(401).json({ error: 'User not found' });
+            return res.status(401).json({ message: 'User not found. Please register !' });
         }
 
         if (! await bcrypt.compare(password, user.password)) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
 
         const token = jwt.sign({ id: user._id, role }, process.env.JWT_SECRET);
+
         res.json({ token, user: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, role } });
     } catch (error) {
+
         res.status(400).json({ error: error.message });
     }
 };

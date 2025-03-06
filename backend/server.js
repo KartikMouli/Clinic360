@@ -34,10 +34,23 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
+
+
 app.use(express.json());
 
 // Connect to database
 connectDB();
+
+
+// Root route to indicate API info
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: 'Welcome to the backend API for Arogo AI Clinic360!',
+        status: 'Running',
+        website: 'https://clinic360.vercel.app',
+        repository:'https://github.com/KartikMouli/ArogoAI_Clinic360',
+    });
+});
 
 // API routes
 app.use('/api/auth', authRoutes);
