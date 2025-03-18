@@ -6,6 +6,14 @@ exports.searchDoctors = async (req, res) => {
         if (!specialty && !location && !name) {
             return res.status(400).json({ message: 'specialty or location or name required' });
         }
+
+        const cacheKey = `doctors:${specialty || ''}:${location || ''}:${name || ''}`;
+        const cachedData = await client.get(cacheKey);
+
+        if (cachedData) {
+            return res.status(200).json(JSON.parse(cachedData));
+        }
+
         let query = {};
         if (specialty) query.specialization = specialty;
         if (location) query.location = location;
@@ -19,6 +27,11 @@ exports.searchDoctors = async (req, res) => {
         if (!doctors || doctors.length === 0) {
             return res.status(404).json({ message: 'No doctors found' });
         }
+
+        // Cache the result with an expiry (e.g., 3600 seconds = 1 hour)
+        await client.set(cacheKey, JSON.stringify(doctors), 'EX', 60);
+
+
         res.status(200).json(doctors);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -27,10 +40,21 @@ exports.searchDoctors = async (req, res) => {
 
 exports.getDoctorProfile = async (req, res) => {
     try {
+        const cacheKey = `doctor:${req.params.id}`;
+        const cachedData = await client.get(cacheKey);
+
+        if (cachedData) {
+            return res.status(200).json(JSON.parse(cachedData));
+        }
+
         const doctor =await Doctor.findById(req.params.id).select('firstName lastName specialization experience location availabilitySlots');
         if (!doctor) {
             return res.status(404).json({ message: 'Doctor not found' });
         }
+        
+        // Cache the doctor profile with an expiry (e.g., 1 hour)
+        await client.set(cacheKey, JSON.stringify(doctor), 'EX', 3600);
+
         res.status(200).json(doctor);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });

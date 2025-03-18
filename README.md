@@ -57,6 +57,8 @@ Follow these steps to set up the project locally:
         EMAIL_USER=<your_email_address>
         EMAIL_PASS=<your_email_password>
         EMAIL_FROM=<your_email_password>
+        REDIS_HOST=<your_redis_host>
+        REDIS_PORT=<your_redis_port>
         ```
 
         Replace the placeholder values with your actual configuration.
