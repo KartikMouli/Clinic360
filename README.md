@@ -15,7 +15,9 @@ This is a full-stack MERN (MongoDB, Express.js, React, Node.js) application that
 ## Features
 
 *   **Doctor Search**: Search for doctors by specialization, location, and name.
+    Redis Caching: Frequently searched queries are cached in Redis to reduce database load and improve response times.
 *   **Doctor Profiles**: View detailed doctor profiles, including experience, location, and availability.
+    Redis Caching: Doctor profiles are cached in Redis, allowing faster retrieval for subsequent requests.
 *   **Appointment Booking**: Patients can book available time slots with doctors.
 *   **Availability Management**: Doctors can set and manage their availability (working hours and consultation locations).
 *   **Appointment Management**: Patients can view and cancel their appointments.
